@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css
+    ?family=Muli:200,300,400,500,600,700,800,900&display=swap" />
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css"
+          href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <style media="screen">
+        *,
+        *:before,
+        *:after{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #20c997;
+        }
+        .background{
+            width: 430px;
+            height: 520px;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            left: 50%;
+            top: 50%;
+        }
+
+        form{
+            height: 550px;
+            width: 400px;
+            background-color: #51585e;
+            position: absolute;
+            transform: translate(-50%,-40%);
+            top:50%;
+            left: 50%;
+            bottom: 10px;
+            border-radius: 10px;
+            /*backdrop-filter: blur(10px);*/
+            /*box-shadow: 0 0 40px rgba(8,7,16,0.6);*/
+            padding: 50px 35px;
+        }
+        form *{
+            font-family: 'Poppins',sans-serif;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+        form h3{
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+            text-align: center;
+        }
+        h1{
+            text-align: center;
+            top: 5px;
+        }
+        href{
+            text-decoration : none;
+            text-decoration-line: none;
+        }
+        label{
+            display: block;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        input{
+            display: block;
+            height: 30px;
+            width: 100%;
+            background-color: rgba(255,255,255,0.07);
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        ::placeholder{
+            color: #e5e5e5;
+        }
+        .social{
+            margin-top: 30px;
+            display: flex;
+        }
+        .social div{
+            background: red;
+            width: 150px;
+            border-radius: 3px;
+            padding: 5px 10px 10px 5px;
+            background-color: rgba(255,255,255,0.27);
+            color: #eaf0fb;
+            text-align: center;
+        }
+        .social div:hover{
+            background-color: rgba(255,255,255,0.47);
+        }
+        .social .fb{
+            margin-left: 25px;
+        }
+        .social i{
+            margin-right: 4px;
+        }
+        .login{
+            margin-top: 30px;
+            width: 100%;
+            background-color: #ffffff;
+            color: #080710;
+            padding: 10px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .signUp{
+            width: 100%;
+            margin-top: 30px;
+            background-color: #3dd5f3;
+            color: #080710;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+        }
+        .field-error {
+            border-color: #eccccf;
+            color: #eccccf;
+            font-size: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<h1 class="white fs-l3 lh-2 md-fs-xl1 md-lh-1 fw-900 "><a href="" th:href="@{/}" >HT MALL</a></h1>
+<form action="" th:action th:name="addMember" th:object="${member}" method="post">
+    <h3>Login Here</h3>
+
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p class="field-error" th:each="error : ${#fields.globalErrors()}"
+           th:text="${error}">전체 오류 메시지</p>
+    </div>
+
+    <label for="loginId">LoginId</label>
+    <input type="text" placeholder="LoginId" th:field="*{loginId}"
+           id="loginId" class="form-control" th:errorclass="field-error">
+    <div class="field-error" th:errors="*{loginId}" />
+
+
+    <label for="password">Password</label>
+    <input type="password" placeholder="Password" th:field="*{password}"
+           id="password" class="form-control" th:errorclass="field-error">
+    <div class="field-error" th:errors="*{password}" />
+
+    <button class="login" type="submit">LogIn</button>
+    <div class="social">
+        <div class="go">Google</div>
+        <div class="fb">Facebook</div>
+    </div>
+    <button class="signUp" th:onclick="|location.href='@{/member/signUp}'|"
+            type="button">Sign Up Right Now!</button>
+</form>
+</body>
+</html>
