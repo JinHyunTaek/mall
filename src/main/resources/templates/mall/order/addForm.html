@@ -31,7 +31,6 @@
         }
 
         input[type="text"],
-        textarea,
         select {
             background: rgba(255,255,255,0.1);
             border: none;
@@ -46,7 +45,16 @@
             box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
             margin-bottom: 30px;
         }
-
+        input::placeholder {
+            border: none;
+            font-size: 16px;
+            height: auto;
+            margin: 0;
+            outline: 0;
+            padding: 15px;
+            width: 100%;
+            background-color: #fcf8e3;
+        }
         select {
             padding: 6px;
             height: 32px;
@@ -87,41 +95,38 @@
 <body>
 <div class="row">
     <div class="col-md-12">
-        <form action="" th:action th:object="${item}" method="post", enctype="multipart/form-data">
-            <h1> Register your product! </h1>
-
+        <form action="" th:action th:object="${order}" method="post">
+            <h1> Product Order Form </h1>
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+                   th:text="${err}">전체 오류 메시지</p>
+            </div>
             <fieldset>
+                <input type="hidden" id="itemId" th:field="*{itemId}" readonly>
+                <input type="hidden" id="stock" th:field="*{stock}" readonly>
+
                 <label for="itemName">Item Name</label>
-                <input type="text" id="itemName" name="itemName">
+                <input type="text" id="itemName" th:field="*{itemName}" readonly>
 
-                <lable for="file">Item Images</lable>
-                <input type="file" multiple="multiple" name="imageFiles">
+                <label for="price">Price</label>
+                <input type="text" id="price" th:field="*{price}" readonly>
+
+                <label for="quantity">Enter quantity you wish to purchase.</label>
+                <input type="text" id="quantity" th:field="*{quantity}"
+                th:placeholder=" |${order.stock} stock left|">
+                <div class="field-error" th:errors="*{quantity}" style="font-size: 15px;"/>
 
             </fieldset>
 
             <fieldset>
-                <label for="price">Price (1,000~1,000,000)</label>
-                <input type="text" id="price" name="price" th:errorclass="field-error">
-                <div class="field-error" th:errors="*{price}" />
+                <label for="city">City</label>
+                <input type="text" id="city" th:field="*{city}" readonly>
 
-                <label for="stock">Stock (1~999)</label>
-                <input type="text" id="stock" name="stock" th:errorclass="field-error">
-                <div class="field-error" th:errors="*{stock}" />
-
-                <label for="description">Description</label>
-                <textarea id="description" name="description" th:errorclass="field-error"></textarea>
-                <div class="field-error" th:errors="*{description}" />
-
-                <label for="itemCategory">Item Category</label>
-                <select id="itemCategory" th:field="*{itemCategory}">
-                    <option value="">Select Item Category</option>
-                    <option th:each="itemCategory : *{itemCategories}" th:value="${itemCategory.name()}"
-                            th:text="${itemCategory}">none</option>
-                </select>
-                <div class="field-error" th:errors="*{itemCategory}" />
+                <label for="zipcode">Zipcode</label>
+                <input type="text" id="zipcode" th:field="*{zipcode}"readonly>
 
             </fieldset>
-            <button type="submit">Sign Up</button>
+            <button type="submit">Purchase</button>
         </form>
     </div>
 </div>

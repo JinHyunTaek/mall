@@ -1,14 +1,14 @@
 package com.ht.mall.service;
 
 import com.ht.mall.exeption.BasicException;
-import com.ht.mall.projections.SimpleMember;
+import com.ht.mall.projections.member.SimpleMember;
 import com.ht.mall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import static com.ht.mall.exeption.ErrorCode.NO_MEMBER_FOUND;
 
 @Transactional(readOnly = true)
 @Service
@@ -20,7 +20,7 @@ public class HomeService {
 
     public SimpleMember findById(Long memberId){
         return memberRepository.findSimpleById(memberId)
-                .orElseThrow(() -> new BasicException("no member found"));
+                .orElseThrow(() -> new BasicException(NO_MEMBER_FOUND));
     }
 
 }

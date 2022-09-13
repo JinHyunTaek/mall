@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -28,7 +29,16 @@ public class Member extends BaseEntity{
 
     private String password;
 
+    private Integer cash;
+
     @Embedded
     private Address address;
+
+    @Enumerated(STRING)
+    private MemberLevel memberLevel;
+
+    public void updateCash(Integer cash){
+        this.cash = cash;
+    }
 
 }

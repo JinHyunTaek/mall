@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', sans-serif
+        }
+        html,
+        body {
+            height: 100%
+        }
+        body {
+            display: grid;
+            place-items: center;
+            background: #AB47BC
+        }
+        .card {
+            color:#fff;
+            width: 350px;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #9a40a9, #b74cc9);
+            box-shadow:  20px 20px 60px #913ca0,
+            -20px -20px 60px #c552d8;
+            border: none
+        }
+        .num{
+            color:#eee !important;
+        }
+        .line{
+            color:#fff;
+        }
+        .profile_button{
+            color:#fff;
+            padding:10px;
+            border:none;
+            outline:0 !important;
+            border-radius: 50px;
+            background: #AB47BC;
+            box-shadow:  28px 28px 57px #933da2,
+            -28px -28px 57px #c351d6;
+        }
+    </style>
+</head>
+<body>
+<div class="container d-flex justify-content-center">
+    <div class="card p-3 py-4">
+        <div class="text-center">
+
+            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" width="100" class="rounded-circle">
+            <h3 class="mt-2" th:text="${member.name}">member name</h3>
+            <span class="mt-1 clearfix" th:text="${member.memberLevel.name()}">member level</span>
+
+            <div class="row mt-3 mb-3">
+
+                <div class="col-md-4">
+                    <h5>Field 1</h5>
+                    <span class="num">10</span>
+                </div>
+                <div class="col-md-4">
+                    <h5>Field 2</h5>
+                    <span class="num">10</span>
+                </div>
+                <div class="col-md-4">
+                    <h5>Field 3</h5>
+                    <span class="num">10</span>
+                </div>
+            </div>
+            <hr class="line">
+            <small class="mt-4">This is member description</small>
+            <div class="profile mt-5">
+                <button class="profile_button px-5"
+                        th:onclick="|location.href='@{/member/profile(memberId=${member.id})}'|">
+                    View profile
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

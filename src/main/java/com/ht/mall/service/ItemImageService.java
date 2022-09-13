@@ -3,7 +3,8 @@ package com.ht.mall.service;
 import com.ht.mall.entity.Item;
 import com.ht.mall.entity.ItemImage;
 import com.ht.mall.exeption.BasicException;
-import com.ht.mall.repository.ItemImageRepository;
+import com.ht.mall.exeption.ErrorCode;
+import com.ht.mall.repository.item.ItemImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static com.ht.mall.exeption.ErrorCode.INTERNAL_SERVER_ERROR;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +57,7 @@ public class ItemImageService {
         try{
             multipartFile.transferTo(new java.io.File(fullPath));
         }catch (IOException e){
-            throw new BasicException("file error",e);
+            throw new BasicException(e,INTERNAL_SERVER_ERROR);
         }
 
         return ItemImage.builder()

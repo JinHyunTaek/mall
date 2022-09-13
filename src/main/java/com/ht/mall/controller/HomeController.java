@@ -1,13 +1,13 @@
 package com.ht.mall.controller;
 
-import com.ht.mall.projections.SimpleMember;
+import com.ht.mall.argumentresolver.Login;
+import com.ht.mall.projections.member.SimpleMember;
 import com.ht.mall.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,7 +18,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(
-            @SessionAttribute(name = "memberId", required = false) Long memberId,
+            @Login Long memberId,
             Model model
     ){
         if(memberId != null){

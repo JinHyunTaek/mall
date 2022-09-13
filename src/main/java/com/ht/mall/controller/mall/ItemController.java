@@ -1,7 +1,13 @@
 package com.ht.mall.controller.mall;
 
+import com.ht.mall.argumentresolver.Login;
 import com.ht.mall.entity.ItemCategory;
-import com.ht.mall.form.SaveItemForm;
+import com.ht.mall.entity.Member;
+import com.ht.mall.entity.MemberLevel;
+import com.ht.mall.exeption.BasicException;
+import com.ht.mall.form.item.ItemDetailForm;
+import com.ht.mall.form.item.SaveItemForm;
+import com.ht.mall.repository.MemberRepository;
 import com.ht.mall.service.ItemImageService;
 import com.ht.mall.service.ItemService;
 import lombok.RequiredArgsConstructor;
@@ -9,12 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
 import java.util.List;
+
+import static com.ht.mall.exeption.ErrorCode.FORBIDDEN;
+import static com.ht.mall.exeption.ErrorCode.NO_MEMBER_FOUND;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,11 +34,21 @@ public class ItemController {
 
     private final ItemService itemService;
     private final ItemImageService itemImageService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/save")
-    public String save(@ModelAttribute("item")SaveItemForm form){
+    public String save(@ModelAttribute("item")SaveItemForm form,
+                       @Login Long memberId){
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BasicException(NO_MEMBER_FOUND));
+
+        if(member.getMemberLevel().equals(MemberLevel.CUSTOMER)){
+            log.info("call forbidden error");
+            throw new BasicException(FORBIDDEN);
+        }
+
         form.setItemCategories(List.of(ItemCategory.values()));
-        return "mall/addForm";
+        return "mall/item/addForm";
     }
 
     @PostMapping("/save")
@@ -37,16 +57,31 @@ public class ItemController {
                        @SessionAttribute("memberId") Long memberId){
         if(bindingResult.hasErrors()){
             log.info("item save error, errors={}",bindingResult);
-            return "mall/addForm";
+            return "mall/item/addForm";
         }
         itemService.saveItem(form,memberId);
 
-        return "redirect:/mall/addForm";
+        return "redirect:/mall/main";
     }
+
+    @GetMapping("/detail/{itemId}")
+    public String detail(
+            @PathVariable("itemId") Long itemId,
+            @SessionAttribute(name = "memberId", required = false) Long memberId,
+            ItemDetailForm form,
+            Model model
+    ){
+        ItemDetailForm item = itemService.detail(form, itemId);
+        model.addAttribute("item",item);
+        model.addAttribute("memberId",memberId);
+        return "mall/item/detail";
+    }
+
 
     @ResponseBody
     @GetMapping("/image/{representImageName}")
     public Resource downloadFile(@PathVariable String representImageName) throws MalformedURLException {
+        System.out.println("representImageName = " + representImageName);
         return new UrlResource("file:"+itemImageService.getFullPath(representImageName));
     }
 

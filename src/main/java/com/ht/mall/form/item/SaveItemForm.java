@@ -1,4 +1,4 @@
-package com.ht.mall.form;
+package com.ht.mall.form.item;
 
 import com.ht.mall.entity.Item;
 import com.ht.mall.entity.ItemCategory;
@@ -21,11 +21,11 @@ public class SaveItemForm {
 
     @Min(value = 1000)
     @Max(value = 1000000)
-    private int price;
+    private Integer price;
 
     @Min(value = 1)
     @Max(value = 999)
-    private int stock;
+    private Integer stock;
 
     @NotEmpty
     @Size(min = 5,max = 100)

@@ -1,7 +1,8 @@
-package com.ht.mall.form;
+package com.ht.mall.form.member;
 
 import com.ht.mall.entity.Address;
 import com.ht.mall.entity.Member;
+import com.ht.mall.entity.MemberLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -37,6 +38,8 @@ public class SaveMemberForm {
                 .loginId(loginId)
                 .password(password)
                 .address(new Address(city,zipcode))
+                .memberLevel(MemberLevel.CUSTOMER)
+                .cash(10000)
                 .build();
     }
 

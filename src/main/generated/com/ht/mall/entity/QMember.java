@@ -26,6 +26,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final QAddress address;
 
+    public final NumberPath<Integer> cash = createNumber("cash", Integer.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
@@ -35,6 +37,8 @@ public class QMember extends EntityPathBase<Member> {
     public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
     public final StringPath loginId = createString("loginId");
+
+    public final EnumPath<MemberLevel> memberLevel = createEnum("memberLevel", MemberLevel.class);
 
     public final StringPath name = createString("name");
 

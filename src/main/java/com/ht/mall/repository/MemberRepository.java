@@ -1,7 +1,7 @@
 package com.ht.mall.repository;
 
 import com.ht.mall.entity.Member;
-import com.ht.mall.projections.SimpleMember;
+import com.ht.mall.projections.member.SimpleMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 

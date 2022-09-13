@@ -1,4 +1,4 @@
-package com.ht.mall.form;
+package com.ht.mall.form.member;
 
 import lombok.Getter;
 import lombok.Setter;

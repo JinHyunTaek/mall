@@ -2,109 +2,109 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Muli:200,300,400,500,600,700,800,900&display=swap" />
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
     <style>
         .container {
-            max-width: 1000px;
-        }
-        .field-error {
-            border-color: #dc3545;
-            color: #dc3545;
+            max-width: 800px;
         }
         body{
             background: linear-gradient(to right, #c04848, #480048);
-            min-height: 100vh
-        }
-        .text-gray{
-            color: #aaa
         }
         img{
+            padding: 5px;
             height: 170px;
-            width: 140px
+            width: 150px;
+        }
+        h1{
+            color: white;
+            text-align: center;
         }
         .row{
-            width: 1000px;
+            width: 800px;
+        }
+        field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .selected{
+            border-color: #0c63e4;
+            color: #0c63e4;
+            font-weight: bold;
+        }
+        .non-selected{
+            border-color: #0dcaf0;
+            color: #0dcaf0;
+            font-weight: bold;
+        }
+        .pagination{
+            display: inline-block;
+            width: 60px;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="row text-center text-white mb-5">
-        <div class="col-lg-7 mx-auto">
-            <h1 class="display-4">Product List</h1>
-        </div>
+
+<form action="/member/logout" method="post">
+    <div id="nav-items" style="display: inline-block; white-space: nowrap; float: right;">
+        <a href="#home" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Home</a>
+        <a href="#features" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Features</a>
+        <a href="" th:href="@{/mall/main}"
+           class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">mall</a>
+        <a href="#blog" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Blog</a>
+        <a href="" th:if="${memberId == null}"
+           th:href="@{/member/login}" class="button bg-white black fw-600 no-underline mx-5">Join Us</a>
+        <button th:if="${memberId != null}" type="submit"
+                name="your_name" class="button bg-white black fw-600 no-underline mx-5">logout</button>
     </div>
+</form>
+
+<div class="container">
+    <h1 class="white fs-l3 lh-2 md-fs-xl1 md-lh-1 fw-900"><a href="" th:href="@{/}" >HT MALL</a></h1>
     <div class="row">
         <div class="col">
             <!-- List group-->
-            <ul class="list-group shadow">
+            <ul class="list-group shadow" th:each="item : ${items}">
                 <!-- list group item-->
-                <li class="list-group-item">
+                <li class="list-group-item" style="background-color: #dfc2c4">
                     <!-- Custom content-->
                     <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                        <div class="media-body order-2 order-lg-1" th:each="item : ${items}">
-                            <h5 class="mt-0 font-weight-bold mb-2" th:text="${item.itemName}"></h5>
-                            <p class="font-italic text-muted mb-0 small" th:text="${item.description}"></p>
+                        <div class="media-body order-2 order-lg-1">
+                            <a href="" class="mt-0 font-weight-bold mb-2"
+                               th:href="@{/mall/item/detail/{itemId}(itemId=${item.id})}"
+                               th:text="${item.itemName}"></a>
                             <div class="d-flex align-items-center justify-content-between mt-1">
                                 <h6 class="font-weight-bold my-2" th:text="${item.price}">99,900</h6>
-                                <ul class="list-inline small">
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                </ul>
                             </div>
-                        </div><img th:src="/mall/item/image/${item.image.}" alt="Generic placeholder image"
-                                   width="200" class="ml-lg-5 order-1 order-lg-2">
-                    </div> <!-- End -->
-                </li> <!-- End -->
-                <!-- list group item -->
-                <li class="list-group-item">
-                    <!-- Custom content-->
-                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                        <div class="media-body order-2 order-lg-1">
-                            <h5 class="mt-0 font-weight-bold mb-2">Apple iPhone XS Max (Gold, 64 GB)</h5>
-                            <p class="font-italic text-muted mb-0 small">64 GB ROM | 16.51 cm (6.5 inch) Super Retina HD Display 12MP + 12MP | 7MP Front Camera A12 Bionic Chip Processor</p>
-                            <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">₹1,09,900</h6>
-                                <ul class="list-inline small">
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>
-                                </ul>
-                            </div>
-                        </div><img src="https://i.imgur.com/KFojDGa.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
-                    </div> <!-- End -->
-                </li> <!-- End -->
-                <!-- list group item -->
-                <li class="list-group-item">
-                    <!-- Custom content-->
-                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                        <div class="media-body order-2 order-lg-1">
-                            <h5 class="mt-0 font-weight-bold mb-2">OnePlus 7 Pro (Almond, 256 GB)</h5>
-                            <p class="font-italic text-muted mb-0 small">Rear Camera|48MP (Primary)+ 8MP (Tele-photo)+16MP (ultrawide)| Front Camera|16 MP POP-UP Camera|8GB RAM|Android pie</p>
-                            <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">₹ 52,999</h6>
-                                <ul class="list-inline small">
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
-                                </ul>
-                            </div>
-                        </div><img src="https://i.imgur.com/6IUbEME.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                        </div>
+                        <img th:src="|/mall/item/image/${item.representImageName}|">
                     </div> <!-- End -->
                 </li> <!-- End -->
             </ul> <!-- End -->
         </div>
     </div>
+
+    <a th:if="${startPage >= 10}" class="non-selected" th:href="@{/mall/main(page=${startPage-1})}">◀prev</a>
+
+    <div th:class="pagination" th:each="page : ${#numbers.sequence(startPage,endPage)}">
+        <a th:if="${hasNext}" th:class="${page == currentPage} ? 'selected' : 'non-selected'"
+           th:href="@{/mall/main(page=${page})}"
+           th:text="|[${page+1}]|"></a>
+    </div>
+
+    <a class="non-selected" th:if="${hasNext}"
+       th:href="@{/mall/main(page=${endPage+1})}" th:text="|▶next|">▶next</a>
+    <hr>
+
 </div>
 
 </body>

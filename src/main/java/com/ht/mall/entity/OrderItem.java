@@ -15,7 +15,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
-public class OrderItem {
+public class OrderItem extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -29,5 +29,9 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
+
+    private Integer orderPrice;
+
+    private Integer quantity;
 
 }

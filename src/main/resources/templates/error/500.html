@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css" />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Muli:200,300,400,500,600,700,800,900&display=swap" />
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+  <style>
+    body{
+      background: linear-gradient(to right, #c04848, #480048);
+    }
+    h1{
+      color: white;
+      text-align: center;
+    }
+    .container{
+      max-width: 560px;
+    }
+  </style>
+  <title>This is 500 Error Page</title>
+</head>
+
+<body>
+<div id="nav-items" style="display: inline-block; white-space: nowrap; float: right;">
+  <a href="#home" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Home</a>
+  <a href="#features" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Features</a>
+  <a href="" th:href="@{/mall/main}"
+     class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">mall</a>
+  <a href="#blog" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Blog</a>
+  <a href="" th:href="@{/member/login}" class="button bg-white black fw-600 no-underline mx-5">Join Us</a>
+</div>
+
+<div class="container">
+  <h1 class="white fs-l3 lh-2 md-fs-xl1 md-lh-1 fw-900">
+    <a href="" th:href="@{/}" >This is 500 Error Page</a>
+  </h1>
+  <h3>
+    <div th:text="|ErrorCode = ${errorCode}|"></div>
+    <div th:text="|ErrorStatus = ${httpStatus}|"></div>
+  </h3>
+</div>
+</body>
+</html>

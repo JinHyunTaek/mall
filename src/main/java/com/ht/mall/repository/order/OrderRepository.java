@@ -1,4 +1,4 @@
-package com.ht.mall.repository;
+package com.ht.mall.repository.order;
 
 import com.ht.mall.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
