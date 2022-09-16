@@ -24,8 +24,6 @@ import static com.ht.mall.exeption.ErrorCode.INTERNAL_SERVER_ERROR;
 @Slf4j
 public class ItemImageService {
 
-    private final ItemImageRepository itemImageRepository;
-
     @Value("${file.dir}")
     public String imageDir;
 
@@ -35,18 +33,15 @@ public class ItemImageService {
 
     @Transactional
     public ItemImage saveItemImages(List<MultipartFile> multipartFiles, Item item) {
-        List<ItemImage> itemImages = new ArrayList<>();
-
         for (MultipartFile multipartFile : multipartFiles) {
-            ItemImage itemImage = saveImage(multipartFile, item);
-            itemImageRepository.save(itemImage);
-            itemImages.add(itemImage);
+            ItemImage itemImage = saveImage(multipartFile);
+            itemImage.addItem(item);
         }
-        return itemImages.get(0);
+        return item.getItemImages().get(0);
     }
 
     @Transactional
-    public ItemImage saveImage(MultipartFile multipartFile, Item item)  {
+    public ItemImage saveImage(MultipartFile multipartFile)  {
         if(multipartFile.isEmpty()){
             return null;
         }
@@ -61,7 +56,6 @@ public class ItemImageService {
         }
 
         return ItemImage.builder()
-                .item(item)
                 .originalImageName(originalImageName)
                 .storedImageName(storedImageName)
                 .build();
@@ -69,7 +63,7 @@ public class ItemImageService {
 
     public void deleteImagesInDirectory(List<ItemImage> images) {
         for (ItemImage itemImage : images) {
-            String storedImageName = getFullPath(itemImage.getStoredImageName());
+            String storedImageName = itemImage.getStoredImageName();
             java.io.File storedImage = new java.io.File(getFullPath(storedImageName));
             storedImage.delete();
         }

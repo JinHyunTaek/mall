@@ -55,7 +55,7 @@ public class OrderController {
             log.info("entered more quantity than remaining stock");
         }
         orderService.saveOrderItem(orderForm,memberId);
-        return "redirect:/member/myProfile?memberId="+memberId;
+        return "redirect:/member/myProfile";
     }
 
 }

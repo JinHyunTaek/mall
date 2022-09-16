@@ -1,5 +1,6 @@
 package com.ht.mall.entity;
 
+import com.ht.mall.exeption.BasicException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,5 +30,13 @@ public class ItemImage extends BaseEntity {
     private String originalImageName;
 
     private String storedImageName;
+
+    public void addItem(Item item){
+        this.item = item;
+        if(item.getItemImages() == null){
+            throw new RuntimeException();
+        }
+        item.getItemImages().add(this);
+    }
 
 }

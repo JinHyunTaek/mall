@@ -2,7 +2,6 @@ package com.ht.mall.controller.mall;
 
 import com.ht.mall.condition.PageItemCond;
 import com.ht.mall.dto.ItemSimpleDto;
-import com.ht.mall.entity.ItemCategory;
 import com.ht.mall.service.mall.MainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import static com.ht.mall.entity.ItemCategory.CLOTHES;
+import static com.ht.mall.entity.enumType.ItemCategory.CLOTHES;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Controller

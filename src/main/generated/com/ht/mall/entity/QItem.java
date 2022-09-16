@@ -31,7 +31,9 @@ public class QItem extends EntityPathBase<Item> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final EnumPath<ItemCategory> itemCategory = createEnum("itemCategory", ItemCategory.class);
+    public final EnumPath<com.ht.mall.entity.enumType.ItemCategory> itemCategory = createEnum("itemCategory", com.ht.mall.entity.enumType.ItemCategory.class);
+
+    public final ListPath<ItemImage, QItemImage> itemImages = this.<ItemImage, QItemImage>createList("itemImages", ItemImage.class, QItemImage.class, PathInits.DIRECT2);
 
     public final StringPath itemName = createString("itemName");
 

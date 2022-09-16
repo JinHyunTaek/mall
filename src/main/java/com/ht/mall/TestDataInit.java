@@ -1,6 +1,8 @@
 package com.ht.mall;
 
 import com.ht.mall.entity.*;
+import com.ht.mall.entity.enumType.ItemCategory;
+import com.ht.mall.entity.enumType.MemberLevel;
 import com.ht.mall.repository.MemberRepository;
 import com.ht.mall.repository.item.ItemImageRepository;
 import com.ht.mall.repository.item.ItemRepository;
@@ -11,6 +13,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -19,7 +23,6 @@ public class TestDataInit {
 
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
-    private final ItemImageRepository itemImageRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void testDataInit(){
@@ -30,7 +33,7 @@ public class TestDataInit {
         }
     }
 
-    public Member setAuthority(){
+    private Member setAuthority(){
         Member member = Member.builder()
                 .name("test name")
                 .loginId("123")
@@ -43,7 +46,7 @@ public class TestDataInit {
         return savedMember;
     }
 
-    public Member setCustomer(){
+    private Member setCustomer(){
         Member member = Member.builder()
                 .name("customer123")
                 .loginId("ccc")
@@ -57,23 +60,23 @@ public class TestDataInit {
     }
 
     public void setItem(int i,Member member){
+        ItemImage itemImage = ItemImage.builder()
+                .originalImageName("test.gif")
+                .storedImageName("test.gif")
+                .build();
+
         Item item = Item.builder()
                 .itemName("test-itemName" + i)
+                .representImage(itemImage)
                 .itemCategory(ItemCategory.CLOTHES)
                 .description("this is test description " + i)
-                .price(5000 + i)
+                .price(1000 + i)
                 .stock(95 + i)
                 .member(member)
                 .build();
 
-        Item save = itemRepository.save(item);
-
-        ItemImage itemImage = ItemImage.builder()
-                .item(save)
-                .originalImageName("test" + i + ".gif")
-                .storedImageName("test" + i + ".gif")
-                .build();
-        ItemImage savedItemImage = itemImageRepository.save(itemImage);
-        item.setRepresentImage(savedItemImage);
+        itemImage.addItem(item);
+        itemRepository.save(item);
     }
+
 }

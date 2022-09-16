@@ -1,5 +1,6 @@
 package com.ht.mall.entity;
 
+import com.ht.mall.entity.enumType.MemberLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

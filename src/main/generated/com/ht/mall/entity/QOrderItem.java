@@ -27,6 +27,8 @@ public class QOrderItem extends EntityPathBase<OrderItem> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
+    public final QDelivery delivery;
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final QItem item;
@@ -58,6 +60,7 @@ public class QOrderItem extends EntityPathBase<OrderItem> {
 
     public QOrderItem(Class<? extends OrderItem> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.delivery = inits.isInitialized("delivery") ? new QDelivery(forProperty("delivery")) : null;
         this.item = inits.isInitialized("item") ? new QItem(forProperty("item"), inits.get("item")) : null;
         this.order = inits.isInitialized("order") ? new QOrder(forProperty("order"), inits.get("order")) : null;
     }

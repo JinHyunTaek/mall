@@ -1,7 +1,7 @@
 package com.ht.mall.form.item;
 
 import com.ht.mall.entity.Item;
-import com.ht.mall.entity.ItemCategory;
+import com.ht.mall.entity.enumType.ItemCategory;
 import com.ht.mall.entity.Member;
 import lombok.Getter;
 import lombok.Setter;

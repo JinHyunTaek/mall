@@ -1,7 +1,7 @@
 package com.ht.mall.repository.item;
 
 import com.ht.mall.entity.Item;
-import com.ht.mall.entity.ItemCategory;
+import com.ht.mall.entity.enumType.ItemCategory;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 

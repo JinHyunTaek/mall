@@ -2,7 +2,6 @@ package com.ht.mall.service.mall;
 
 import com.ht.mall.condition.PageItemCond;
 import com.ht.mall.dto.ItemSimpleDto;
-import com.ht.mall.entity.ItemCategory;
 import com.ht.mall.repository.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.ht.mall.entity;
+package com.ht.mall.entity.enumType;
 
 import lombok.Getter;
 

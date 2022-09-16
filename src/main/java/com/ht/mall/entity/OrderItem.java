@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Builder
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
 public class OrderItem extends BaseEntity{
 
     @Id
@@ -29,6 +30,10 @@ public class OrderItem extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
+
+    @OneToOne
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
     private Integer orderPrice;
 

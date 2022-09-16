@@ -1,9 +1,9 @@
 package com.ht.mall.controller.mall;
 
 import com.ht.mall.argumentresolver.Login;
-import com.ht.mall.entity.ItemCategory;
+import com.ht.mall.entity.enumType.ItemCategory;
 import com.ht.mall.entity.Member;
-import com.ht.mall.entity.MemberLevel;
+import com.ht.mall.entity.enumType.MemberLevel;
 import com.ht.mall.exeption.BasicException;
 import com.ht.mall.form.item.ItemDetailForm;
 import com.ht.mall.form.item.SaveItemForm;
@@ -20,11 +20,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import static com.ht.mall.exeption.ErrorCode.FORBIDDEN;
-import static com.ht.mall.exeption.ErrorCode.NO_MEMBER_FOUND;
+import static com.ht.mall.exeption.ErrorCode.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -82,7 +82,19 @@ public class ItemController {
     @GetMapping("/image/{representImageName}")
     public Resource downloadFile(@PathVariable String representImageName) throws MalformedURLException {
         System.out.println("representImageName = " + representImageName);
-        return new UrlResource("file:"+itemImageService.getFullPath(representImageName));
+        return new UrlResource("file:" + itemImageService.getFullPath(representImageName));
+    }
+
+    @PostMapping("/delete/{itemId}")
+    public String delete(
+            @PathVariable("itemId") Long itemId,
+            @SessionAttribute(name = "memberId") Long memberId
+    ){
+        if(memberId==null){
+            throw new BasicException(UNAUTHORIZED);
+        }
+        itemService.delete(itemId);
+        return "redirect:/mall/main";
     }
 
 }

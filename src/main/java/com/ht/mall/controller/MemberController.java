@@ -99,9 +99,11 @@ public class MemberController {
             MyProfileForm myProfileForm,
             Model model
     ){
-        if(itemCond.getMemberId() != memberId || itemCond == null){
+        if(memberId == null){
             throw new BasicException(ErrorCode.BAD_REQUEST);
         }
+
+        itemCond.setMemberId(memberId);
         Page<ItemSimpleDto> items = memberService.findOrderItem(pageable, itemCond);
         MyProfileForm member = memberService.setMyProfile(myProfileForm, memberId);
 

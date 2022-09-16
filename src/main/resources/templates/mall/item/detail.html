@@ -65,6 +65,10 @@
                 <h4 class="mt-5" th:text="|price: ${item.price}(won)|">
                     <small class="text-success" th:text="|(discount:0%)|">discount</small></h4>
 
+                <form th:action="@{/mall/item/delete/{itemId}(itemId=${item.itemId})}" method="post">
+                    <button th:if="${item.memberId == memberId}" class="btn btn-primary btn-rounded" type="submit">Delete
+                    </button>
+                </form>
                 <button th:if="${item.memberId != memberId}" class="btn btn-dark btn-rounded mr-1"
                         data-toggle="tooltip" data-original-title="Add to cart">
                     <i class="fa fa-shopping-cart"></i>

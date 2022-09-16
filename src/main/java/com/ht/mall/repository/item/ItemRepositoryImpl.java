@@ -3,7 +3,7 @@ package com.ht.mall.repository.item;
 import com.ht.mall.condition.PageItemCond;
 import com.ht.mall.dto.ItemSimpleDto;
 import com.ht.mall.dto.QItemSimpleDto;
-import com.ht.mall.entity.ItemCategory;
+import com.ht.mall.entity.enumType.ItemCategory;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -40,7 +40,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
                 .where(
                         itemCategoryEq(itemCond.getItemCategory())
                 )
-                .join(item.representImage, itemImage)
+                .join(item.representImage,itemImage)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(item.id.desc())

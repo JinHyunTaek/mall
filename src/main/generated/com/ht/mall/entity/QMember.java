@@ -38,7 +38,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath loginId = createString("loginId");
 
-    public final EnumPath<MemberLevel> memberLevel = createEnum("memberLevel", MemberLevel.class);
+    public final EnumPath<com.ht.mall.entity.enumType.MemberLevel> memberLevel = createEnum("memberLevel", com.ht.mall.entity.enumType.MemberLevel.class);
 
     public final StringPath name = createString("name");
 

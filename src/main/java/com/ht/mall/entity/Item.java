@@ -1,8 +1,12 @@
 package com.ht.mall.entity;
 
+import com.ht.mall.entity.enumType.ItemCategory;
 import lombok.*;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
@@ -28,6 +32,10 @@ public class Item extends BaseEntity{
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "item_image_id")
     private ItemImage representImage;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ItemImage> itemImages = new ArrayList<>();
 
     @Enumerated(value = STRING)
     private ItemCategory itemCategory;

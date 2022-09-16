@@ -2,10 +2,9 @@ package com.ht.mall.form.member;
 
 import com.ht.mall.entity.Address;
 import com.ht.mall.entity.Member;
-import com.ht.mall.entity.MemberLevel;
+import com.ht.mall.entity.enumType.MemberLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 

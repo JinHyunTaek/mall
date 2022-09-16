@@ -1,7 +1,7 @@
 package com.ht.mall.form.member;
 
 import com.ht.mall.entity.Member;
-import com.ht.mall.entity.MemberLevel;
+import com.ht.mall.entity.enumType.MemberLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

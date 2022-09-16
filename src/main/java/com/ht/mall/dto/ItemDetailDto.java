@@ -1,9 +1,7 @@
 package com.ht.mall.dto;
 
-import com.ht.mall.entity.ItemCategory;
-import com.querydsl.core.annotations.QueryProjection;
+import com.ht.mall.entity.enumType.ItemCategory;
 import lombok.Getter;
-import org.apache.catalina.LifecycleState;
 
 import java.time.LocalDateTime;
 import java.util.List;

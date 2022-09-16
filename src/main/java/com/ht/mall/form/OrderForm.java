@@ -1,6 +1,7 @@
 package com.ht.mall.form;
 
 import com.ht.mall.entity.*;
+import com.ht.mall.entity.enumType.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,6 @@ import lombok.Setter;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
-import static com.ht.mall.entity.OrderStatus.VALID;
 
 @Getter @Setter
 @Builder
@@ -18,8 +18,6 @@ public class OrderForm {
     private Long itemId;
 
     private String itemName;
-
-    private String representItemName;
 
     private Integer stock;
 
@@ -39,7 +37,6 @@ public class OrderForm {
         return OrderForm.builder()
                 .itemId(item.getId())
                 .itemName(item.getItemName())
-                .representItemName(item.getRepresentImage().getStoredImageName())
                 .stock(item.getStock())
                 .price(item.getPrice())
                 .city(member.getAddress().getCity())
@@ -49,7 +46,7 @@ public class OrderForm {
 
     public Order toEntity(Member member){
         return Order.builder()
-                .orderStatus(VALID)
+                .orderStatus(OrderStatus.CANCEL_ENABLED)
                 .member(member)
                 .build();
     }

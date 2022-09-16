@@ -39,6 +39,13 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    @Transactional
+    public void delete(Long itemId){
+        List<ItemImage> itemImages = itemImageRepository.findByItemId(itemId);
+        itemImageService.deleteImagesInDirectory(itemImages);
+        itemRepository.deleteById(itemId);
+    }
+
     public ItemDetailForm detail(ItemDetailForm form, Long itemId){
         Item item = itemRepository.findWithMemberById(itemId);
         List<ItemImage> itemImages = itemImageRepository.findByItemId(itemId);
