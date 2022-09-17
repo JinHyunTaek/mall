@@ -69,10 +69,12 @@
                     <button th:if="${item.memberId == memberId}" class="btn btn-primary btn-rounded" type="submit">Delete
                     </button>
                 </form>
-                <button th:if="${item.memberId != memberId}" class="btn btn-dark btn-rounded mr-1"
-                        data-toggle="tooltip" data-original-title="Add to cart">
-                    <i class="fa fa-shopping-cart"></i>
-                </button>
+                <form th:action="@{/mall/cart/add(itemId=${item.itemId})}" method="post">
+                    <button th:if="${item.memberId != memberId}" class="btn btn-dark btn-rounded mr-1"
+                            data-toggle="tooltip" data-original-title="Add to cart">
+                        <i class="fa fa-shopping-cart"></i>
+                    </button>
+                </form>
                 <button th:if="${item.memberId != memberId}" class="btn btn-primary btn-rounded"
                         th:onclick="|location.href='@{/mall/order/buy(itemId=${item.itemId})}'|">Buy Now
                 </button>

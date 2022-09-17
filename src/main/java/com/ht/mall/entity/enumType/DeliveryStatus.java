@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum DeliveryStatus {
 
-    SHIPPING_PREPARED("배송 준비중"),
+    SHIPPING_YET("배송 시작 전"),
+    SHIPPING_PREPARING("배송 준비중"),
     SHIPPING("배송중"),
     SHIPPING_COMPLETED("배송 완료");
 

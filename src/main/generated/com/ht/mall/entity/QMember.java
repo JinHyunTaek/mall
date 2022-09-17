@@ -26,6 +26,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final QAddress address;
 
+    public final QCart cart;
+
     public final NumberPath<Integer> cash = createNumber("cash", Integer.class);
 
     //inherited
@@ -63,6 +65,7 @@ public class QMember extends EntityPathBase<Member> {
     public QMember(Class<? extends Member> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.address = inits.isInitialized("address") ? new QAddress(forProperty("address")) : null;
+        this.cart = inits.isInitialized("cart") ? new QCart(forProperty("cart"), inits.get("cart")) : null;
     }
 
 }

@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -23,6 +26,10 @@ public class Member extends BaseEntity{
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "member_id")
     private Long id;
+
+    @OneToOne(fetch = LAZY,cascade = {PERSIST,REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     private String name;
 

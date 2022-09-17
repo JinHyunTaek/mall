@@ -13,8 +13,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -35,6 +33,7 @@ public class TestDataInit {
 
     private Member setAuthority(){
         Member member = Member.builder()
+                .cart(Cart.builder().build())
                 .name("test name")
                 .loginId("123")
                 .password("123")
@@ -48,6 +47,7 @@ public class TestDataInit {
 
     private Member setCustomer(){
         Member member = Member.builder()
+                .cart(Cart.builder().build())
                 .name("customer123")
                 .loginId("ccc")
                 .password("ccc")

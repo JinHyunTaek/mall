@@ -1,6 +1,7 @@
 package com.ht.mall.form;
 
 import com.ht.mall.entity.*;
+import com.ht.mall.entity.enumType.DeliveryStatus;
 import com.ht.mall.entity.enumType.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,6 +56,11 @@ public class OrderForm {
         return OrderItem.builder()
                 .order(order)
                 .item(item)
+                .delivery(
+                        Delivery.builder()
+                                .deliveryStatus(DeliveryStatus.SHIPPING_YET)
+                                .build()
+                )
                 .orderPrice(orderForm.getPrice()*orderForm.getQuantity())
                 .quantity(orderForm.getQuantity())
                 .build();
