@@ -99,13 +99,15 @@
             font-size: 10px;
         }
     </style>
+    <th:block th:replace="fragment/header :: common_header"></th:block>
 </head>
 <body>
 <div class="background">
     <div class="shape"></div>
     <div class="shape"></div>
 </div>
-<h1 class="white fs-l3 lh-2 md-fs-xl1 md-lh-1 fw-900 "><a href="" th:href="@{/}" >HT MALL</a></h1>
+<!--<h1 class="white fs-l3 lh-2 md-fs-xl1 md-lh-1 fw-900 "><a href="" th:href="@{/}" >HT MALL</a></h1>-->
+<h1 class="white fs-l3 lh-2 md-fs-xl1 md-lh-1 fw-900 ">HT MALL</h1>
 <form action="" th:action th:object="${member}" method="post">
     <h3>Sign Up Here</h3>
 
@@ -116,7 +118,7 @@
 
     <label for="name">Name</label>
     <input type="text" placeholder="Name" th:field="*{name}"
-           id="loginId" class="form-control" th:errorclass="field-error">
+           id="name" class="form-control" th:errorclass="field-error">
     <div class="field-error" th:errors="*{name}" />
 
     <label for="loginId">LoginId</label>

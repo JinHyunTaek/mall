@@ -1,14 +1,14 @@
-package com.ht.mall.service;
+package com.ht.mall.service.mall;
 
 import com.ht.mall.entity.Item;
 import com.ht.mall.entity.Member;
 import com.ht.mall.entity.Order;
 import com.ht.mall.entity.OrderItem;
 import com.ht.mall.exeption.BasicException;
-import com.ht.mall.form.OrderForm;
+import com.ht.mall.form.order.OrderForm;
 import com.ht.mall.repository.orderItem.OrderItemRepository;
 import com.ht.mall.repository.item.ItemRepository;
-import com.ht.mall.repository.MemberRepository;
+import com.ht.mall.repository.member.MemberRepository;
 import com.ht.mall.repository.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

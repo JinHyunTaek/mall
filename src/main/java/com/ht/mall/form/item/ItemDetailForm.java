@@ -33,9 +33,11 @@ public class ItemDetailForm {
 
     private Integer stock;
 
+    private Long likeCount;
+
     private LocalDateTime createdAt;
 
-    public ItemDetailForm toForm(Item item, List<ItemImage> itemImages){
+    public ItemDetailForm toForm(Item item, List<ItemImage> itemImages,Long likeCount){
         return ItemDetailForm.builder()
                 .itemId(item.getId())
                 .itemName(item.getItemName())
@@ -48,6 +50,7 @@ public class ItemDetailForm {
                 .description(item.getDescription())
                 .price(item.getPrice())
                 .stock(item.getStock())
+                .likeCount(likeCount)
                 .createdAt(item.getCreatedDate())
                 .build();
     }

@@ -1,4 +1,4 @@
-package com.ht.mall.service;
+package com.ht.mall.service.mall;
 
 import com.ht.mall.entity.Item;
 import com.ht.mall.entity.ItemImage;

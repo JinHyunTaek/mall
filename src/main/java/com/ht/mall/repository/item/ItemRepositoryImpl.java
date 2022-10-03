@@ -4,6 +4,7 @@ import com.ht.mall.condition.PageItemCond;
 import com.ht.mall.dto.ItemSimpleDto;
 import com.ht.mall.dto.QItemSimpleDto;
 import com.ht.mall.entity.enumType.ItemCategory;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -38,7 +40,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
                         ))
                 .from(item)
                 .where(
-                        itemCategoryEq(itemCond.getItemCategory())
+                        itemCategoryEq(itemCond.getItemCategory()),
+                        searchValueContains(itemCond.getSearchValue())
                 )
                 .join(item.representImage,itemImage)
                 .offset(pageable.getOffset())
@@ -53,6 +56,11 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
                         itemCategoryEq(itemCond.getItemCategory())
                 );
         return PageableExecutionUtils.getPage(items,pageable,() -> countQuery.fetchOne());
+    }
+
+    private BooleanExpression searchValueContains(String searchValue) {
+        return StringUtils.hasText(searchValue) ?
+                item.itemName.contains(searchValue).or(item.description.contains(searchValue)) : null;
     }
 
     private BooleanExpression itemCategoryEq(ItemCategory itemCategory) {

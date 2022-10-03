@@ -1,17 +1,11 @@
 package com.ht.mall.repository.orderItem;
 
 import com.ht.mall.condition.PageItemCond;
-import com.ht.mall.dto.ItemSimpleDto;
-import com.ht.mall.dto.QItemSimpleDto;
-import com.ht.mall.entity.QItem;
-import com.ht.mall.entity.QItemImage;
-import com.ht.mall.entity.QOrder;
-import com.ht.mall.entity.QOrderItem;
-import com.querydsl.core.types.Predicate;
+import com.ht.mall.dto.OrderItemSimpleDto;
+import com.ht.mall.dto.QOrderItemSimpleDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -20,8 +14,10 @@ import javax.persistence.EntityManager;
 
 import java.util.List;
 
+import static com.ht.mall.entity.QDelivery.delivery;
 import static com.ht.mall.entity.QItem.item;
 import static com.ht.mall.entity.QItemImage.itemImage;
+import static com.ht.mall.entity.QMember.member;
 import static com.ht.mall.entity.QOrder.order;
 import static com.ht.mall.entity.QOrderItem.orderItem;
 
@@ -29,43 +25,42 @@ public class OrderItemRepositoryImpl implements OrderItemRepositoryCustom{
 
     private final JPAQueryFactory queryFactory;
 
-    @Autowired
     public OrderItemRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
     @Override
-    public Page<ItemSimpleDto> simpleItem(Pageable pageable, PageItemCond itemCond) {
-        List<ItemSimpleDto> items = queryFactory
-                .select(
-                        new QItemSimpleDto(
-                                item.id, item.itemName,
-                                item.representImage.storedImageName,
-                                item.price, item.createdDate
+    public Page<OrderItemSimpleDto> simpleOrderItem(Pageable pageable, PageItemCond itemCond) {
+        List<OrderItemSimpleDto> orderItems = queryFactory.select(
+                        new QOrderItemSimpleDto(
+                                item.id, item.itemName, item.representImage.storedImageName,
+                                item.price, orderItem.id, orderItem.quantity,
+                                orderItem.orderPrice, orderItem.createdDate, orderItem.delivery.deliveryStatus
                         ))
                 .from(orderItem)
                 .join(orderItem.item, item)
-                .join(orderItem.order, order)
                 .join(item.representImage, itemImage)
+                .join(orderItem.delivery, delivery)
+                .join(orderItem.order,order)
+                .join(order.member, member)
                 .where(
-                        order_memberIdEq(itemCond.getMemberId())
+                        memberIdEq(itemCond.getMemberId())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(item.id.desc())
+                .orderBy(orderItem.id.desc())
                 .fetch();
-
         JPAQuery<Long> countQuery = queryFactory
                 .select(orderItem.countDistinct())
                 .from(orderItem)
-                .join(orderItem.order, order)
                 .where(
-                        order_memberIdEq(itemCond.getMemberId())
+                        memberIdEq(itemCond.getMemberId())
                 );
-        return PageableExecutionUtils.getPage(items,pageable,() -> countQuery.fetchOne());
+        return PageableExecutionUtils.getPage(orderItems,pageable,() -> countQuery.fetchOne());
 
     }
-    private BooleanExpression order_memberIdEq(Long memberId) {
+
+    private BooleanExpression memberIdEq(Long memberId) {
         return memberId != null ? order.member.id.eq(memberId) : null;
     }
 }

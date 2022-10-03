@@ -2,7 +2,7 @@ package com.ht.mall.service;
 
 import com.ht.mall.exeption.BasicException;
 import com.ht.mall.projections.member.SimpleMember;
-import com.ht.mall.repository.MemberRepository;
+import com.ht.mall.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

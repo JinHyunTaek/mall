@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <style>
         a:link{
             color:saddlebrown;
@@ -32,26 +32,12 @@
             border-radius: 0;
         }
     </style>
+    <th:block th:replace="fragment/header :: common_header"/>
 </head>
 <body>
-<div style="padding:3px;">
-    <form action="/member/logout" method="post">
-        <div id="nav-items" style="display: inline-block; white-space: nowrap; float: right;">
-            <a href="#home" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Home</a>
-            <a href="#features" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Features</a>
-            <a href="" th:href="@{/mall/main}"
-               class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">mall</a>
-            <a href="#blog" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Blog</a>
-            <a href="" th:if="${memberId == null}"
-               th:href="@{/member/login}" class="button bg-white black fw-600 no-underline mx-5">Join Us</a>
-            <button th:if="${memberId != null}" type="submit"
-                    name="your_name" class="button bg-white black fw-600 no-underline mx-5">logout</button>
-        </div>
-    </form>
-</div>
 <div class="container">
     <div class="card">
-        <h3 class="card-title" th:text="${item.itemName}">itemName</h3>
+        <h3 class="card-title" th:text="|${item.itemName} [${item.itemCategory}]|">itemName</h3>
         <div class="row">
             <div class="col-lg-5 col-md-5 col-sm-6">
                 <div class="white-box text-center">
@@ -62,9 +48,11 @@
             <div class="col-lg-7 col-md-7 col-sm-6">
                 <h4 class="box-title mt-5">Product description</h4>
                 <p th:text="${item.description}">description</p>
-                <h4 class="mt-5" th:text="|price: ${item.price}(won)|">
-                    <small class="text-success" th:text="|(discount:0%)|">discount</small></h4>
-
+                <h4 class="mt-5" th:text="|price: ${item.price}(won)|"></h4>
+                like <button type="button" onclick="like()" id="itemId" th:value="${item.itemId}"
+                             class="shop-tooltip close float-none text-danger">♡</button>
+                <div th:text="${item.likeCount}" id="likeCount"></div>
+                </form>
                 <form th:action="@{/mall/item/delete/{itemId}(itemId=${item.itemId})}" method="post">
                     <button th:if="${item.memberId == memberId}" class="btn btn-primary btn-rounded" type="submit">Delete
                     </button>
@@ -93,8 +81,32 @@
                 <h3 class="box-title mt-5">General Info</h3>
             </div>
         </div>
+        <script>
+            function like() {
+                // /*<![CDATA[*/
+                // var itemId = [[${itemId}]];
+                // var memberId = [[${memberId}]];
+                // /*]]>*/
+                var itemId = $("#itemId").val();
+                var memberId = 1;
+                $.ajax({
+                    url: "/mall/item/like?itemId="+itemId +"&memberId="+memberId,
+                    type: 'post',
+                    data: {
+                        itemId : itemId,
+                        memberId : memberId
+                    },
+                    success : function (data){
+
+                    }
+                    error: function () {
+                        alert("error");
+                        return false;
+                    }
+                })
+            }
+        </script>
     </div>
-</div>
 </div>
 </body>
 </html>

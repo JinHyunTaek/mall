@@ -8,9 +8,10 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Embeddable
 @Builder
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
+@ToString
 public class Address {
 
     private String city;

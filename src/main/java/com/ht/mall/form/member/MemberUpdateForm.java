@@ -1,18 +1,18 @@
 package com.ht.mall.form.member;
 
-import com.ht.mall.entity.Address;
-import com.ht.mall.entity.Cart;
 import com.ht.mall.entity.Member;
-import com.ht.mall.entity.enumType.MemberLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter @Setter
-public class SaveMemberForm {
+@Builder
+public class MemberUpdateForm {
+
+    private Long id;
 
     @NotEmpty
     @Size(min = 2,max = 10)
@@ -30,19 +30,18 @@ public class SaveMemberForm {
     @Size(min = 2,max = 10)
     private String city;
 
-    @NotNull
+    @NotEmpty
     @Size(min = 5,max = 10)
     private String zipcode;
 
-    public Member toEntity(){
-        return Member.builder()
-                .cart(Cart.builder().build())
-                .name(name)
-                .loginId(loginId)
-                .password(password)
-                .address(new Address(city,zipcode))
-                .memberLevel(MemberLevel.CUSTOMER)
-                .cash(10000)
+    public MemberUpdateForm toForm(Member member){
+        return MemberUpdateForm.builder()
+                .id(member.getId())
+                .name(member.getName())
+                .loginId(member.getLoginId())
+                .password(member.getPassword())
+                .city(member.getCurrentAddress().getCity())
+                .zipcode(member.getCurrentAddress().getZipcode())
                 .build();
     }
 

@@ -1,4 +1,4 @@
-package com.ht.mall.repository;
+package com.ht.mall.repository.member;
 
 import com.ht.mall.entity.Member;
 import com.ht.mall.projections.member.SimpleMember;

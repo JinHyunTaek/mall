@@ -1,9 +1,7 @@
 package com.ht.mall.controller.mall;
 
-import com.ht.mall.form.OrderForm;
-import com.ht.mall.repository.order.OrderRepository;
-import com.ht.mall.repository.item.ItemRepository;
-import com.ht.mall.service.OrderService;
+import com.ht.mall.form.order.OrderForm;
+import com.ht.mall.service.mall.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class OrderController {
 
-    private final OrderRepository orderRepository;
-    private final ItemRepository itemRepository;
     private final OrderService orderService;
 
     @GetMapping("/buy")
@@ -36,13 +32,14 @@ public class OrderController {
     public String order(@Validated @ModelAttribute("order") OrderForm orderForm,
                         BindingResult bindingResult,
                         @SessionAttribute("memberId") Long memberId){
+        if(bindingResult.hasErrors()){
+            log.error("errors={}",bindingResult);
+            return "mall/order/addForm";
+        }
+
         Integer myCash = orderService.getCashByMemberId(memberId);
         Integer totalPrice = orderForm.getPrice()*orderForm.getQuantity();
 
-        if(bindingResult.hasErrors()){
-            log.info("errors={}",bindingResult);
-            return "mall/order/addForm";
-        }
         if(myCash<totalPrice){
             bindingResult.reject("cash", new Object[]{myCash,totalPrice},null);
             log.info("need more cash");

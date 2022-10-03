@@ -2268,7 +2268,7 @@ class Dropdown extends BaseComponent {
 
     if (!items.length) {
       return;
-    } // if target isn't included in items (e.g. when expanding the dropdown)
+    } // if target isn't included in form (e.g. when expanding the dropdown)
     // allow cycling to get the last item in case key equals ARROW_UP_KEY
 
 

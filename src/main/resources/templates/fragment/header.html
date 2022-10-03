@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+</style>
+<th:block th:fragment="common_header">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <nav class="w-100pc flex flex-column md-flex-row md-px-10 py-3 " style="background-color: #0dcaf0;">
+        <div style="display: inline-block; white-space: nowrap; float: left; top:10px;">
+            <a href="" th:href="@{/}" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Home</a>
+            <a href="#features" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Features</a>
+            <a href="" th:href="@{/mall/main}"
+               class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">mall</a>
+            <a href="" th:href="@{/member/myProfile}"
+               class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">MyProfile</a>
+        </div>
+    </nav>
+</th:block>
+</html>

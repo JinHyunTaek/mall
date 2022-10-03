@@ -1,4 +1,4 @@
-package com.ht.mall.form;
+package com.ht.mall.form.order;
 
 import com.ht.mall.entity.*;
 import com.ht.mall.entity.enumType.DeliveryStatus;
@@ -40,8 +40,8 @@ public class OrderForm {
                 .itemName(item.getItemName())
                 .stock(item.getStock())
                 .price(item.getPrice())
-                .city(member.getAddress().getCity())
-                .zipcode(member.getAddress().getZipcode())
+                .city(member.getCurrentAddress().getCity())
+                .zipcode(member.getCurrentAddress().getZipcode())
                 .build();
     }
 

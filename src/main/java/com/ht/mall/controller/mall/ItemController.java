@@ -7,9 +7,9 @@ import com.ht.mall.entity.enumType.MemberLevel;
 import com.ht.mall.exeption.BasicException;
 import com.ht.mall.form.item.ItemDetailForm;
 import com.ht.mall.form.item.SaveItemForm;
-import com.ht.mall.repository.MemberRepository;
-import com.ht.mall.service.ItemImageService;
-import com.ht.mall.service.ItemService;
+import com.ht.mall.repository.member.MemberRepository;
+import com.ht.mall.service.mall.ItemImageService;
+import com.ht.mall.service.mall.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -20,7 +20,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.List;
 
@@ -81,7 +80,6 @@ public class ItemController {
     @ResponseBody
     @GetMapping("/image/{representImageName}")
     public Resource downloadFile(@PathVariable String representImageName) throws MalformedURLException {
-        System.out.println("representImageName = " + representImageName);
         return new UrlResource("file:" + itemImageService.getFullPath(representImageName));
     }
 
@@ -95,6 +93,15 @@ public class ItemController {
         }
         itemService.delete(itemId);
         return "redirect:/mall/main";
+    }
+
+    @ResponseBody
+    @PostMapping("/like")
+    public void saveLike(
+            @RequestParam("itemId") Long itemId,
+            @RequestParam("memberId") Long memberId
+    ){
+        itemService.saveOrDeleteLike(itemId, memberId);
     }
 
 }

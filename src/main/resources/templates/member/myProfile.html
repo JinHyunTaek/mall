@@ -7,6 +7,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shorthandcss@1.1.1/dist/shorthand.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <th:block th:replace="fragment/header :: common_header"></th:block>
 </head>
 <style>
     body{
@@ -26,13 +27,8 @@
         text-align: center;
     }
     .profile-img img{
-        width: 70%;
-        height: 100%;
-    }
-    img{
-        padding: 5px;
-        height: 170px;
-        width: 150px;
+        width: 100px;
+        height: 130px;
     }
     .profile-img .file {
         position: relative;
@@ -83,123 +79,135 @@
 <body>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<div style="display: inline-block; white-space: nowrap; float: right; top:10px;">
-    <a href="#home" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Home</a>
-    <a href="#features" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Features</a>
-    <a href="" th:href="@{/mall/main}"
-       class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">mall</a>
-    <a href="#blog" class="fs-s1 mx-3 py-3 indigo no-underline hover-underline">Blog</a>
-</div>
 <h1 class="white fs-l3 lh-2 md-fs-xl1 md-lh-1 fw-900"><a href="" th:href="@{/}" >MY PROFILE</a></h1>
 <div class="container">
-    <form method="post">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-img">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""/>
-                    <div class="file btn btn-lg btn-primary">
-                        Change Photo
-                        <input type="file" name="file"/>
-                    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="https://bootdey.com/img/Content/avatar/avatar7.png"/>
+                <div class="file btn btn-primary">
+                    Change Photo
+                    <input type="file" name="file"/>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="profile-head">
-                    <h5 th:text="${member.name}">name</h5>
-                    <h6 th:text="${member.memberLevel.name()}">memberLevel</h6>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Shipping</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Purchase History</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
+        <div class="col-md-6">
+            <div class="profile-head">
+                <h5 th:text="${member.name}">name</h5>
+                <h6 th:text="${member.memberLevel.name()}">memberLevel</h6>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Shipping</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Purchase History</a>
+                    </li>
+                </ul>
             </div>
-            <div class="col-md-8">
+        </div>
+        <div class="col-md-2">
+            <input type="button" class="profile-edit-btn"
+                    th:onclick="|location.href='@{/member/update}'|" value="Edit Profile"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
 
-                <div class="tab-content profile-tab" id="myTabContent">
-
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <!-- List group-->
-                        <ul class="list-group shadow" th:each="item : ${items}">
-                            <li class="list-group-item" style="background-color: #dfc2c4">
-                                <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                    <div class="media-body order-2 order-lg-1">
-                                        <a href="" class="mt-0 font-weight-bold mb-2"
-                                           th:href="@{/mall/item/detail/{itemId}(itemId=${item.id})}"
-                                           th:text="${item.itemName}"></a>
-                                        <div class="d-flex align-items-center justify-content-between mt-1">
-                                            <h6 class="font-weight-bold my-2" th:text="${item.price}">99,900</h6>
-                                        </div>
+        <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <!-- List group-->
+                    <div th:if="${!orderItems.isEmpty()}" class="table-responsive">
+                        <table class="table table-bordered m-0">
+                            <thead>
+                            <tr>
+                                <!-- Set columns width -->
+                                <th class="text-center py-3 px-4" style="min-width: 330px;">Product Name &amp; Details</th>
+                                <th class="text-center py-3 px-4" style="font-size:15px; width: 70px;">Quantity</th>
+                                <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
+                                <th class="text-right py-3 px-4" style="width: 100px;">DeliveryStatus</th>
+                            </tr>
+                            </thead>
+                            <tbody th:each="item : ${orderItems}">
+                            <td class="p-4">
+                                <div class="media align-items-center">
+                                    <img th:src="|/mall/item/image/${item.representImageName}|"
+                                         class="d-block ui-w-40 ui-bordered mr-4"
+                                         style="width:20px; height: 20px;">
+                                    <div class="media-body">
+                                        <a href="#" class="d-block text-dark" th:text="${item.itemName}"
+                                           th:field="${item.itemName}">name</a>
+                                        <small>
+                                            <span class="text-muted" th:text="|Price: ${item.itemPrice}|">Price</span>
+                                            <span class="text-muted" th:text=
+                                                    "|Orderdate: ${#temporals.format(item.orderDate,'yyyy-MM-dd HH:mm')}|">OrderDate</span>
+                                            <br>
+                                            <span class="text-muted">Ships from: Korea</span>
+                                        </small>
                                     </div>
-                                    <img th:src="|/mall/item/image/${item.representImageName}|">
-                                </div> <!-- End -->
-                            </li> <!-- End -->
-                        </ul> <!-- End -->
+                                </div>
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4" th:text="${item.quantity}">quantity</td>
+                            <td class="text-right font-weight-semibold align-middle p-4" th:text="|${item.totalOrderPrice}|">total</td>
+                            <td class="text-right font-weight-semibold align-middle p-4" th:text="${item.deliveryStatus}">Delivery</td>
+                            </tbody>
+                        </table>
                     </div>
+                </div>
 
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Experience</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Expert</p>
-                            </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Experience</label>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Hourly Rate</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>10$/hr</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Total Projects</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>230</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>English Level</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Expert</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Availability</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>6 months</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Your Bio</label><br/>
-                                <p>Your detail description</p>
-                            </div>
+                        <div class="col-md-6">
+                            <p>Expert</p>
                         </div>
                     </div>
-                </div> <!-- myTabContent -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Hourly Rate</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>10$/hr</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Total Projects</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>230</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>English Level</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Expert</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Availability</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>6 months</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Your Bio</label><br/>
+                            <p>Your detail description</p>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- myTabContent -->
 
-            </div>
         </div>
-    </form>
+    </div>
 </div>
 </body>
 </html>
